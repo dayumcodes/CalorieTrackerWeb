@@ -113,6 +113,14 @@ export const CardGallery3D = () => {
           }
           return pos;
         });
+
+        // Update the transforms for each column
+        const columns = document.querySelectorAll('.scroll-column');
+        columns.forEach((column, index) => {
+          if (column instanceof HTMLElement) {
+            column.style.transform = `translateY(${scrollPositionsRef.current[index]}px)`;
+          }
+        });
       }
 
       animationRef.current = requestAnimationFrame(animate);
@@ -142,10 +150,14 @@ export const CardGallery3D = () => {
   }, [isPaused]);
 
   return (
-    <div className="relative h-[600px] overflow-hidden bg-gray-950 rounded-xl">
-      {/* Gradient overlays for fade effect */}
-      <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-gray-950 to-transparent z-20" />
-      <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-gray-950 to-transparent z-20" />
+    <div className="relative h-[600px] overflow-hidden bg-gradient-to-br from-green-50 to-blue-50 dark:from-green-900/20 dark:to-blue-900/20 rounded-xl">
+      {/* Enhanced gradient overlays for stronger fade effect */}
+      <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-green-50 via-green-50/80 to-transparent dark:from-green-900/20 dark:via-green-900/15 dark:to-transparent z-20" />
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-green-50 via-green-50/80 to-transparent dark:from-green-900/20 dark:via-green-900/15 dark:to-transparent z-20" />
+      
+      {/* Side fade effects */}
+      <div className="absolute top-0 bottom-0 left-0 w-16 bg-gradient-to-r from-green-50 to-transparent dark:from-green-900/20 dark:to-transparent z-20" />
+      <div className="absolute top-0 bottom-0 right-0 w-16 bg-gradient-to-l from-green-50 to-transparent dark:from-green-900/20 dark:to-transparent z-20" />
       
       {/* 3D Gallery Container */}
       <div 
@@ -167,16 +179,15 @@ export const CardGallery3D = () => {
           {duplicatedColumns.map((column, columnIndex) => (
             <div
               key={columnIndex}
-              className="flex flex-col gap-6 w-64"
+              className="scroll-column flex flex-col gap-6 w-64"
               style={{
-                transform: `translateY(${scrollPositionsRef.current[columnIndex]}px)`,
                 transformStyle: 'preserve-3d'
               }}
             >
               {column.map((card, cardIndex) => (
                 <div
                   key={`${card.id}-${cardIndex}`}
-                  className="group relative bg-gray-800 rounded-lg overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-300 cursor-pointer"
+                  className="group relative bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-lg overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-300 cursor-pointer border border-white/20 dark:border-gray-700/20"
                   style={{
                     transform: 'translateZ(0)',
                     transformStyle: 'preserve-3d',
@@ -200,7 +211,7 @@ export const CardGallery3D = () => {
                     {/* Card Content */}
                     <div className="absolute bottom-0 left-0 right-0 p-4">
                       <div className="mb-2">
-                        <span className="inline-block px-2 py-1 text-xs font-semibold text-green-400 bg-green-400/20 rounded-full">
+                        <span className="inline-block px-2 py-1 text-xs font-semibold text-green-600 dark:text-green-400 bg-green-100/80 dark:bg-green-400/20 rounded-full backdrop-blur-sm">
                           {card.category}
                         </span>
                       </div>
@@ -216,8 +227,8 @@ export const CardGallery3D = () => {
         </div>
       </div>
       
-      {/* Ambient background effects */}
-      <div className="absolute inset-0 bg-gradient-to-br from-green-900/10 via-transparent to-blue-900/10 pointer-events-none" />
+      {/* Ambient background effects matching the theme */}
+      <div className="absolute inset-0 bg-gradient-to-br from-green-500/5 via-transparent to-blue-500/5 dark:from-green-400/10 dark:via-transparent dark:to-blue-400/10 pointer-events-none" />
     </div>
   );
 };
