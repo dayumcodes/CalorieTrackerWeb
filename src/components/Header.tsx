@@ -1,8 +1,14 @@
-
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ThemeToggle";
+
+function scrollToSection(id: string) {
+  const el = document.getElementById(id);
+  if (el) {
+    el.scrollIntoView({ behavior: 'smooth' });
+  }
+}
 
 export const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -19,15 +25,15 @@ export const Header = () => {
           
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-4">
-              <a href="#features" className="text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+              <button onClick={() => scrollToSection('features')} className="text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 px-3 py-2 rounded-md text-sm font-medium transition-colors bg-transparent border-none cursor-pointer">
                 Features
-              </a>
-              <a href="#about" className="text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+              </button>
+              <button onClick={() => scrollToSection('about')} className="text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 px-3 py-2 rounded-md text-sm font-medium transition-colors bg-transparent border-none cursor-pointer">
                 About
-              </a>
-              <a href="#contact" className="text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+              </button>
+              <button onClick={() => scrollToSection('contact')} className="text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 px-3 py-2 rounded-md text-sm font-medium transition-colors bg-transparent border-none cursor-pointer">
                 Contact
-              </a>
+              </button>
               <ThemeToggle />
               <Button 
                 className="bg-green-600 hover:bg-green-700 text-white"
@@ -53,15 +59,15 @@ export const Header = () => {
       {isMenuOpen && (
         <div className="md:hidden">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-t dark:border-gray-700/20">
-            <a href="#features" className="text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 block px-3 py-2 rounded-md text-base font-medium">
+            <button onClick={() => { scrollToSection('features'); setIsMenuOpen(false); }} className="text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 block px-3 py-2 rounded-md text-base font-medium bg-transparent border-none cursor-pointer">
               Features
-            </a>
-            <a href="#about" className="text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 block px-3 py-2 rounded-md text-base font-medium">
+            </button>
+            <button onClick={() => { scrollToSection('about'); setIsMenuOpen(false); }} className="text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 block px-3 py-2 rounded-md text-base font-medium bg-transparent border-none cursor-pointer">
               About
-            </a>
-            <a href="#contact" className="text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 block px-3 py-2 rounded-md text-base font-medium">
+            </button>
+            <button onClick={() => { scrollToSection('contact'); setIsMenuOpen(false); }} className="text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 block px-3 py-2 rounded-md text-base font-medium bg-transparent border-none cursor-pointer">
               Contact
-            </a>
+            </button>
             <Button 
               className="bg-green-600 hover:bg-green-700 text-white w-full mt-2"
               onClick={() => window.open('https://www.calorietracker.in/', '_blank')}
