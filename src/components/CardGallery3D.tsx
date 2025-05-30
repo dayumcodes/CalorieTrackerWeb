@@ -76,6 +76,7 @@ export const CardGallery3D = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const animationRef = useRef<number>();
   const scrollPositionsRef = useRef([0, 0, 0]);
+  const [isPaused, setIsPaused] = useState(false);
 
   // Distribute cards across 3 columns
   const columns = [
@@ -98,33 +99,47 @@ export const CardGallery3D = () => {
     };
 
     const animate = () => {
-      // Update scroll positions for each column
-      scrollPositionsRef.current[0] += 0.5; // Column 1: down
-      scrollPositionsRef.current[1] -= 0.5; // Column 2: up
-      scrollPositionsRef.current[2] += 0.5; // Column 3: down
+      if (!isPaused) {
+        // Auto-scroll columns at different speeds and directions
+        scrollPositionsRef.current[0] += 0.8; // Column 1: down
+        scrollPositionsRef.current[1] -= 0.6; // Column 2: up
+        scrollPositionsRef.current[2] += 0.7; // Column 3: down
 
-      // Reset positions for infinite loop (each card is ~300px, with duplicates)
-      const resetThreshold = (cards.length / 3) * 300;
-      scrollPositionsRef.current = scrollPositionsRef.current.map(pos => {
-        if (Math.abs(pos) >= resetThreshold) {
-          return 0;
-        }
-        return pos;
-      });
+        // Reset positions for infinite loop (each card is ~300px, with duplicates)
+        const resetThreshold = (cards.length / 3) * 300;
+        scrollPositionsRef.current = scrollPositionsRef.current.map(pos => {
+          if (Math.abs(pos) >= resetThreshold) {
+            return 0;
+          }
+          return pos;
+        });
+      }
 
       animationRef.current = requestAnimationFrame(animate);
     };
 
+    const handleMouseEnter = () => setIsPaused(true);
+    const handleMouseLeave = () => setIsPaused(false);
+
     document.addEventListener('mousemove', handleMouseMove);
+    if (containerRef.current) {
+      containerRef.current.addEventListener('mouseenter', handleMouseEnter);
+      containerRef.current.addEventListener('mouseleave', handleMouseLeave);
+    }
+    
     animationRef.current = requestAnimationFrame(animate);
 
     return () => {
       document.removeEventListener('mousemove', handleMouseMove);
+      if (containerRef.current) {
+        containerRef.current.removeEventListener('mouseenter', handleMouseEnter);
+        containerRef.current.removeEventListener('mouseleave', handleMouseLeave);
+      }
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
       }
     };
-  }, []);
+  }, [isPaused]);
 
   return (
     <div className="relative h-[600px] overflow-hidden bg-gray-950 rounded-xl">
@@ -135,7 +150,7 @@ export const CardGallery3D = () => {
       {/* 3D Gallery Container */}
       <div 
         ref={containerRef}
-        className="h-full perspective-1000"
+        className="h-full perspective-1000 cursor-pointer"
         style={{
           perspective: '1000px',
           transformStyle: 'preserve-3d'
