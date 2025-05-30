@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Play, Apple } from "lucide-react";
+import { CardGallery3D } from "./CardGallery3D";
 
 export const Hero = () => {
   return (
@@ -44,37 +45,7 @@ export const Hero = () => {
             </div>
           </div>
           <div className="mt-16 sm:mt-24 lg:mt-0 lg:col-span-6">
-            <div className="bg-white rounded-xl shadow-2xl p-8 mx-auto max-w-md lg:max-w-none">
-              <div className="text-center">
-                <div className="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-4">
-                  <span className="text-2xl">🍎</span>
-                </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">Daily Goals</h3>
-                <div className="space-y-4">
-                  <div className="flex justify-between items-center">
-                    <span className="text-gray-600">Calories</span>
-                    <span className="font-semibold">1,247 / 2,000</span>
-                  </div>
-                  <div className="w-full bg-gray-200 rounded-full h-2">
-                    <div className="bg-green-600 h-2 rounded-full" style={{ width: '62%' }}></div>
-                  </div>
-                  <div className="grid grid-cols-3 gap-4 text-center">
-                    <div>
-                      <div className="text-lg font-semibold text-blue-600">156g</div>
-                      <div className="text-xs text-gray-500">Carbs</div>
-                    </div>
-                    <div>
-                      <div className="text-lg font-semibold text-red-600">67g</div>
-                      <div className="text-xs text-gray-500">Fat</div>
-                    </div>
-                    <div>
-                      <div className="text-lg font-semibold text-orange-600">98g</div>
-                      <div className="text-xs text-gray-500">Protein</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <CardGallery3D />
           </div>
         </div>
       </div>
