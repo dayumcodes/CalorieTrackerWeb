@@ -37,31 +37,31 @@ const features = [
 
 export const Features = () => {
   return (
-    <section id="features" className="py-20 bg-white">
+    <section id="features" className="py-20 bg-white dark:bg-gray-900 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-3xl font-bold text-gray-900 sm:text-4xl">
+          <h2 className="text-3xl font-bold text-gray-900 dark:text-white sm:text-4xl">
             Everything You Need to
-            <span className="text-green-600"> Succeed</span>
+            <span className="text-green-600 dark:text-green-400"> Succeed</span>
           </h2>
-          <p className="mt-4 text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="mt-4 text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
             Our comprehensive suite of tools makes calorie tracking simple, accurate, and enjoyable.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {features.map((feature, index) => (
-            <Card key={index} className="hover:shadow-lg transition-shadow duration-300 border-gray-200">
+            <Card key={index} className="hover:shadow-lg transition-shadow duration-300 border-gray-200 dark:border-gray-700 dark:bg-gray-800">
               <CardHeader>
-                <div className="inline-flex items-center justify-center w-12 h-12 bg-green-100 rounded-lg mb-4">
-                  <feature.icon className="h-6 w-6 text-green-600" />
+                <div className="inline-flex items-center justify-center w-12 h-12 bg-green-100 dark:bg-green-900/50 rounded-lg mb-4">
+                  <feature.icon className="h-6 w-6 text-green-600 dark:text-green-400" />
                 </div>
-                <CardTitle className="text-xl font-semibold text-gray-900">
+                <CardTitle className="text-xl font-semibold text-gray-900 dark:text-white">
                   {feature.title}
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <CardDescription className="text-gray-600 text-base leading-relaxed">
+                <CardDescription className="text-gray-600 dark:text-gray-300 text-base leading-relaxed">
                   {feature.description}
                 </CardDescription>
               </CardContent>

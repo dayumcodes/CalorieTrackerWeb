@@ -4,7 +4,7 @@ import { ArrowRight, Download } from "lucide-react";
 
 export const CallToAction = () => {
   return (
-    <section className="bg-gradient-to-r from-green-600 to-blue-600 py-20">
+    <section className="bg-gradient-to-r from-green-600 to-blue-600 dark:from-green-700 dark:to-blue-700 py-20 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h2 className="text-3xl font-bold text-white sm:text-4xl lg:text-5xl">
           Ready to Transform Your Health?
@@ -18,6 +18,7 @@ export const CallToAction = () => {
           <Button 
             size="lg" 
             className="bg-white text-green-600 hover:bg-gray-100 px-8 py-3 text-lg font-semibold"
+            onClick={() => window.open('https://www.calorietracker.in/', '_blank')}
           >
             <ArrowRight className="mr-2 h-5 w-5" />
             Get Started Free
