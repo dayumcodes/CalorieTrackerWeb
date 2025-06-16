@@ -135,12 +135,7 @@ export const CardGallery3D = () => {
   const animationRef = useRef<number>();
   const scrollPositions = useRef([0, 0, 0]);
   const scrollTargets = useRef([0, 0, 0]);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isPaused, setIsPaused] = useState(false);
-
-  // For card tilt: store refs for each card
-  const cardRefs = useRef<(HTMLDivElement | null)[][]>([]);
-  const cardRafRefs = useRef<{ [key: string]: number }>({});
 
   // Distribute cards across 3 columns
   const columns = [
@@ -185,51 +180,6 @@ export const CardGallery3D = () => {
     };
   }, [isPaused]);
 
-  // Mouse movement for 3D tilt of the whole gallery
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      if (containerRef.current) {
-        const rect = containerRef.current.getBoundingClientRect();
-        const x = (e.clientX - rect.left - rect.width / 2) / rect.width;
-        const y = (e.clientY - rect.top - rect.height / 2) / rect.height;
-        setMousePosition({ x: x * 20, y: y * 20 });
-      }
-    };
-    document.addEventListener('mousemove', handleMouseMove);
-    return () => document.removeEventListener('mousemove', handleMouseMove);
-  }, []);
-
-  // Helper for card tilt
-  function handleCardMouseMove(e: React.MouseEvent<HTMLDivElement>, colIdx: number, cardIdx: number) {
-    const card = cardRefs.current[colIdx]?.[cardIdx];
-    if (!card) return;
-    const rect = card.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
-    const y = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
-    // Use rAF for smooth transform
-    if (cardRafRefs.current[`${colIdx}-${cardIdx}`]) {
-      cancelAnimationFrame(cardRafRefs.current[`${colIdx}-${cardIdx}`]);
-    }
-    cardRafRefs.current[`${colIdx}-${cardIdx}`] = requestAnimationFrame(() => {
-      card.style.transform = `translateZ(20px) rotateX(${-y * 10}deg) rotateY(${x * 10}deg) scale(1.06)`;
-    });
-  }
-  function handleCardMouseLeave(colIdx: number, cardIdx: number) {
-    const card = cardRefs.current[colIdx]?.[cardIdx];
-    if (!card) return;
-    if (cardRafRefs.current[`${colIdx}-${cardIdx}`]) {
-      cancelAnimationFrame(cardRafRefs.current[`${colIdx}-${cardIdx}`]);
-    }
-    cardRafRefs.current[`${colIdx}-${cardIdx}`] = requestAnimationFrame(() => {
-      card.style.transform = 'translateZ(0) rotateX(0deg) rotateY(0deg) scale(1)';
-    });
-  }
-
-  // Prepare refs for all cards
-  cardRefs.current = duplicatedColumns.map((col, colIdx) =>
-    Array(col.length).fill(null)
-  );
-
   return (
     <div className="relative h-[600px] overflow-hidden rounded-xl" style={{ background: 'linear-gradient(135deg, #e0f7fa 0%, #e3f2fd 100%)' }}>
       <ParticleBackground />
@@ -242,7 +192,7 @@ export const CardGallery3D = () => {
       {/* 3D Gallery Container */}
       <div 
         ref={containerRef}
-        className="h-full perspective-1000 cursor-pointer relative z-10"
+        className="h-full perspective-1000 relative z-10"
         style={{
           perspective: '1000px',
           transformStyle: 'preserve-3d',
@@ -251,9 +201,8 @@ export const CardGallery3D = () => {
         <div 
           className="h-full flex justify-center items-center gap-8"
           style={{
-            transform: `rotateX(35deg) rotateY(-20deg) translateX(${mousePosition.x}px) translateY(${mousePosition.y}px)`,
+            transform: 'rotateX(35deg) rotateY(-20deg)',
             transformStyle: 'preserve-3d',
-            transition: 'transform 0.1s cubic-bezier(.4,2,.6,1)',
             willChange: 'transform',
           }}
         >
@@ -269,16 +218,11 @@ export const CardGallery3D = () => {
               {column.map((card, cardIndex) => (
                 <div
                   key={`${card.id}-${cardIndex}`}
-                  ref={el => { cardRefs.current[columnIndex][cardIndex] = el; }}
-                  className="group relative bg-white/60 dark:bg-[#23262e]/60 backdrop-blur-xl rounded-2xl overflow-hidden shadow-2xl hover:shadow-[0_8px_32px_0_rgba(94,243,255,0.25)] transition-all duration-500 cursor-pointer border border-white/30 dark:border-[#5ef3ff]/10"
+                  className="group relative bg-white/60 dark:bg-[#23262e]/60 backdrop-blur-xl rounded-2xl overflow-hidden shadow-2xl hover:shadow-[0_8px_32px_0_rgba(94,243,255,0.25)] transition-all duration-500 border border-white/30 dark:border-[#5ef3ff]/10"
                   style={{
-                    transform: 'translateZ(0)',
                     transformStyle: 'preserve-3d',
                     height: '280px',
-                    willChange: 'transform',
                   }}
-                  onMouseMove={e => handleCardMouseMove(e, columnIndex, cardIndex)}
-                  onMouseLeave={() => handleCardMouseLeave(columnIndex, cardIndex)}
                 >
                   <div className="absolute -inset-1 rounded-2xl pointer-events-none group-hover:shadow-[0_0_32px_8px_#5ef3ff55] transition-all duration-500" />
                   <div className="relative h-full overflow-hidden">

@@ -1,10 +1,10 @@
-
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Play, Apple } from "lucide-react";
 import { CardGallery3D } from "./CardGallery3D";
+import { memo } from "react";
 
-export const Hero = () => {
+const HeroComponent = () => {
   return (
     <section className="bg-gradient-to-br from-green-50 to-blue-50 dark:from-green-900/20 dark:to-blue-900/20 py-20 lg:py-32 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -56,3 +56,5 @@ export const Hero = () => {
     </section>
   );
 };
+
+export const Hero = memo(HeroComponent);

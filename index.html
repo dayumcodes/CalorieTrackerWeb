@@ -4,18 +4,33 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Calorie Tracker</title>
-    <meta name="description" content="Lovable Generated Project" />
+    <meta name="description" content="Track Your Calories Effortlessly" />
     <meta name="author" content="Lovable" />
+    <meta name="theme-color" content="#10b981" />
+    
+    <!-- PWA manifest -->
+    <link rel="manifest" href="/manifest.json" />
+    
+    <!-- Favicon and app icons -->
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+    
+    <!-- Preload critical assets -->
+    <link rel="preload" href="/src/index.css" as="style" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
+    <!-- Open Graph meta tags -->
     <meta property="og:title" content="Calorie Tracker" />
-    <meta property="og:description" content="Lovable Generated Project" />
+    <meta property="og:description" content="Track Your Calories Effortlessly" />
     <meta property="og:type" content="website" />
     <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
 
+    <!-- Twitter meta tags -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@lovable_dev" />
     <meta name="twitter:title" content="Calorie Tracker" />
     <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+    
     <!-- Set theme class on html before React loads -->
     <script>
       (function() {
@@ -34,7 +49,8 @@
   <body>
     <div id="root"></div>
     <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
-    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
+    <script src="https://cdn.gpteng.co/gptengineer.js" type="module" data-priority="low"></script>
     <script type="module" src="/src/main.tsx"></script>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
   </body>
 </html>
