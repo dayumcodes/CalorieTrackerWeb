@@ -6,13 +6,12 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import { lazy, Suspense } from "react";
 import { CacheProvider } from "@/contexts/CacheContext";
+import { LoadingScreen } from "@/components/LoadingScreen";
 
 // Lazy load pages
 const Index = lazy(() => import("./pages/Index"));
+const Support = lazy(() => import("./pages/Support"));
 const NotFound = lazy(() => import("./pages/NotFound"));
-
-// Loading fallback
-const LoadingFallback = () => <div className="flex items-center justify-center min-h-screen">Loading...</div>;
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -31,9 +30,10 @@ const App = () => (
           <Toaster />
           <Sonner />
           <BrowserRouter>
-            <Suspense fallback={<LoadingFallback />}>
+            <Suspense fallback={<LoadingScreen />}>
               <Routes>
                 <Route path="/" element={<Index />} />
+                <Route path="/support" element={<Support />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />
               </Routes>

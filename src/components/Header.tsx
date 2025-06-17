@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Coffee } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { Link } from "react-router-dom";
 
 function scrollToSection(id: string) {
   const el = document.getElementById(id);
@@ -19,7 +20,9 @@ export const Header = () => {
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
             <div className="flex-shrink-0">
-              <h1 className="text-2xl font-bold text-green-600 dark:text-green-400">CalorieTracker</h1>
+              <Link to="/" className="text-2xl font-bold text-green-600 dark:text-green-400 hover:text-green-700 dark:hover:text-green-300 transition-colors">
+                CalorieTracker
+              </Link>
             </div>
           </div>
           
@@ -34,6 +37,10 @@ export const Header = () => {
               <button onClick={() => scrollToSection('contact')} className="text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 px-3 py-2 rounded-md text-sm font-medium transition-colors bg-transparent border-none cursor-pointer">
                 Contact
               </button>
+              <Link to="/support" className="flex items-center text-amber-600 dark:text-amber-400 hover:text-amber-700 dark:hover:text-amber-300 px-3 py-2 rounded-md text-sm font-medium transition-colors">
+                <Coffee className="h-4 w-4 mr-1" />
+                Buy Me a Coffee
+              </Link>
               <ThemeToggle />
               <Button 
                 className="bg-green-600 hover:bg-green-700 text-white"
@@ -68,6 +75,10 @@ export const Header = () => {
             <button onClick={() => { scrollToSection('contact'); setIsMenuOpen(false); }} className="text-gray-700 dark:text-gray-300 hover:text-green-600 dark:hover:text-green-400 block px-3 py-2 rounded-md text-base font-medium bg-transparent border-none cursor-pointer">
               Contact
             </button>
+            <Link to="/support" onClick={() => setIsMenuOpen(false)} className="flex items-center text-amber-600 dark:text-amber-400 hover:text-amber-700 dark:hover:text-amber-300 px-3 py-2 rounded-md text-base font-medium">
+              <Coffee className="h-4 w-4 mr-1" />
+              Buy Me a Coffee
+            </Link>
             <Button 
               className="bg-green-600 hover:bg-green-700 text-white w-full mt-2"
               onClick={() => window.open('https://www.calorietracker.in/', '_blank')}
